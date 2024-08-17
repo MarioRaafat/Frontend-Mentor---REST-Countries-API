@@ -6,6 +6,8 @@
     box-shadow: 0 2px 4px 0 rgba(0,0,0,0.1);
     margin: 30px;
     transition: 0.3s;
+    color: var(--text-color);
+    background-color: var(--head-color);
 }
 
 .country-card .card-text {
@@ -24,7 +26,7 @@
     display: flex;
     justify-content: space-around;
     padding: 60px;
-    margin-top: 60px;
+    margin-top: 0px;
     flex-wrap: wrap;
 }
 

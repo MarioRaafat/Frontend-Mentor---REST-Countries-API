@@ -1,3 +1,80 @@
-/*
-    Hussein's Task
-*/
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Cairo", sans-serif;
+    background-color: var(--main-color);
+}
+
+/* start header style  */
+.header {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 50px;
+    align-items: center;
+    background-color: var(--head-color);
+    color: var(--text-color);
+}
+
+.header h2 {
+    font-weight: bold;
+}
+
+.header .darkmode {
+    font-size: 20px;
+}
+
+.header i {
+    cursor: pointer;
+}
+/* end header style  */
+
+/* start search filter style  */
+.section {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 50px;
+    align-items: center;
+    margin-top: 20px;
+}
+.section .search {
+    border: 1px solid var(--main-color);
+    padding: 15px;
+    background-color: var(--head-color);
+    display: flex;
+    width: 400px;
+    gap: 30px;
+    border-radius: 10px;
+    color: var(--text-color);
+}
+.section .search input {
+    border: none;
+    background-color: var(--head-color);
+    flex: 1;
+    color: var(--text-color);
+}
+.section .search input:focus {
+    outline: none;
+}
+.section .search input::placeholder {
+    color: var(--text-color);
+}
+.section .search input:focus::placeholder {
+    opacity: 0;
+    transition: 0.3s;
+}
+.section .search i {
+    cursor: pointer;
+}
+.section .filter .filter-select {
+    width: 100%;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    padding: 15px;
+    border-radius: 10px;
+    background-color: var(--head-color);
+    color: var(--text-color);
+}
+/* end search filter style  */

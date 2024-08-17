@@ -5,27 +5,59 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700&display=swap">
     <title>Discover the World</title>
     <link rel="icon" href="../Imgs/logo.png" type="image/x-icon">
     <link rel="stylesheet" href="../CSS/darkMode.css">
-    <link rel="stylesheet" href="../CSS/format.css">
     <link rel="stylesheet" href="../CSS/header.css">
+    <link rel="stylesheet" href="../CSS/format.css">
     <link rel="stylesheet" href="../CSS/main.css">
+    <link rel="stylesheet" href="../CSS/all.min.css">
+        <!-- goole font  -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+            rel="stylesheet">
 </head>
 
-<body >
-    <header id="main-header"> 
+<body>
+    <header id="main-header">
+        <!-- start Header  -->
+        <div class="header">
+            <h2>Where in the world?</h2>
+            <div class="darkmode">
+                <i class="fa-solid fa-moon dark"></i>
+                <span>Dark Mode</span>
+            </div>
+        </div>
+        <div class="section">
+            <div class="search">
+                <i class="fa-solid fa-magnifying-glass search-btn"></i>
+                <input type="text" placeholder="Search for a country...">
+                <i class="fa-solid fa-delete-left delete-search"></i>
+            </div>
+            <div class="filter">
+                <select class="filter-select">
+                    <option value="All">Filter by Region</option>
+                    <option value="Africa">Africa</option>
+                    <option value="Americas">Americas</option>
+                    <option value="Asia">Asia</option>
+                    <option value="Europe">Europe</option>
+                    <option value="Oceania">Oceania</option>
+                </select>
+            </div>
+        <!-- end Header  -->
     </header>
-
     <main>
         <div id="cards-section">
-            
+
         </div>
     </main>
 
     <script src="../JS/main.js"></script>
     <script src="../JS/darkMode.js"></script>
 </body>
+
 </html>
