@@ -209,6 +209,12 @@ fetch("../../data.json")
         });
         deleteSearch.addEventListener('click', async () => {
             if (searchinput.value) {
+                if(selectedRegion.value === 'All') {
+                    returndata();
+                }
+                else {
+                    filter(data, selectedRegion.value);
+                }
                 searchinput.value = '';
             }
         })

@@ -16,7 +16,11 @@ body {
     background-color: var(--head-color);
     color: var(--text-color);
 }
-
+@media (max-width: 500px) {
+    .header {
+        padding: 15px 10px;
+    }
+}
 .header h2 {
     font-weight: bold;
 }
@@ -37,6 +41,8 @@ body {
     padding: 15px 50px;
     align-items: center;
     margin-top: 20px;
+    flex-wrap: wrap;
+    gap: 20px;
 }
 .section .search {
     border: 1px solid var(--main-color);
