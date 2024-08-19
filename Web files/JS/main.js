@@ -24,7 +24,7 @@ if (searchbtn === undefined) {
 
 
 
-async function country_page(element, data, card) {
+async function country_page(element, data, card, card_name = null) {
     let cssContent;
     await fetch("../CSS/countryPage.css")
         .then(data => data.text())
@@ -33,6 +33,12 @@ async function country_page(element, data, card) {
         });
 
     await fetch("../CSS/header.css")
+        .then(data => data.text())
+        .then(async data => {
+            cssContent += data;
+        });
+
+    await fetch("../CSS/format.css")
         .then(data => data.text())
         .then(async data => {
             cssContent += data;
@@ -57,22 +63,27 @@ async function country_page(element, data, card) {
             jsContent = data;
         });
 
-    const name = element.name.replace(/\s*\(.*?\)\s*/g, '');
+    const name = card_name ? card_name : element.name.replace(/\s*\(.*?\)\s*/g, '');
     const name_id = element.name.replace(/[^a-zA-Z]/g, '').toLowerCase();
     const nativeName = element.nativeName;
     const population = element.population;
     const region = element.region;
     const subregion = element.subregion;
     const capital = element.capital;
-    const topLevelDomain = element.topLevelDomain.join(", ");
-    const currencies = element.currencies.map(currency => currency.name).join(", ");
+    const topLevelDomain = card_name ? "None" : element.topLevelDomain.join(", ");
+    let currencies = "None";
+    if (element.currencies) {
+        currencies = element.currencies.map(currency => currency.name).join(", ");
+    }
     const languages = element.languages.map(language => language.name).join(", ");
-    const borders = element.borders;
+    let borders = null;
+    if (element.borders) {
+        borders = element.borders.map(ele => data.find(e => e.alpha3Code === ele).name.replace(/\s*\(.*?\)\s*/g, ''));
+    }
     const flag_path = element.flags.png;
 
     let borders_list;
-    if (borders !== undefined) {
-        borders.map(ele => data.find(e => e.alpha3Code === ele).name);
+    if (borders !== null) {
         borders_list = document.createElement('div');
         borders_list.classList.add('borders');
         for (border of borders) {
@@ -83,7 +94,9 @@ async function country_page(element, data, card) {
     } else {
         borders_list = document.createElement('div');
         borders_list.classList.add('borders');
-        borders_list.innerText = "";
+        const item = document.createElement('span');
+        item.innerText = "None";
+        borders_list.appendChild(item);
     }
 
     card.addEventListener('click', () => {
@@ -120,6 +133,7 @@ async function country_page(element, data, card) {
                     <div class="card">
                             <img src="${flag_path}" alt="${name}">
                             <div class="card-text">
+                                <div class="columns">
                                 <div class="column_1">
                                     <h1>${name}</h1>
                                         <div class="column-text">
@@ -138,6 +152,8 @@ async function country_page(element, data, card) {
                                         <p>Languages: ${languages}</p>
                                     </div>
                                 </div>
+                                </div>
+
                                 <div class="card-text-footer">
                                     <div>Border Countries: </div>
                                     ${borders_list.outerHTML}
@@ -155,10 +171,13 @@ async function country_page(element, data, card) {
         const blob = new Blob([htmlContent], { type: 'text/html' });
         const url = URL.createObjectURL(blob);
 
-        const a = document.querySelector(`#${name_id} a`);
-        a.href = url;
-        a.target = '_blank';
-        a.click();
+        if (card !== null) {
+            const a = document.querySelector(`#${name_id} a`);
+            a.href = url;
+            a.target = '_blank';
+            a.click();
+        }
+        return url;
     });
 }
 
@@ -245,9 +264,9 @@ fetch("../../data.json")
         
         // or 
         searchinput.addEventListener('input', async (e) => {
-            if (e.target.value !== '') {
-                await search(data, searchinput.value);
-            }// else {
+            //if (e.target.value !== '') {
+                search(data, searchinput.value);
+            //} else {
             //     if (selectedRegion.value === 'All') {
             //         returndata();
             //     } else {
