@@ -1,3 +1,19 @@
+let selectedRegion = document.querySelector('.filter-select');
+selectedRegion.value = 'All';
+let searchinput = document.querySelector('.search input');
+let searchbtn = document.querySelector('.search-btn');  // where???!!!
+let deleteSearch = document.querySelector('.delete-search');
+const cards_section = document.getElementById('cards-section');
+
+if (cards_section === null) {
+    console.error("cards_section is null");
+}
+if (searchbtn === undefined) {
+    console.error("searchbtn is undefined");
+}
+
+
+
 async function country_page(element, data, card) {
     let cssContent;
     await fetch("../CSS/countryPage.css")
@@ -6,16 +22,33 @@ async function country_page(element, data, card) {
             cssContent = data;
         });
 
-    // let jsContent;
-    // await fetch("./countryPage.js")
-    //     .then(data => data.text())
-    //     .then(async data => {
-    //         jsContent = data;
-    //     });
+    await fetch("../CSS/header.css")
+        .then(data => data.text())
+        .then(async data => {
+            cssContent += data;
+        });
+
+    await fetch("../CSS/darkMode.css")
+        .then(data => data.text())
+        .then(async data => {
+            cssContent += data;
+        });
+
+    await fetch("../CSS/all.min.css")
+        .then(data => data.text())
+        .then(async data => {
+            cssContent += data;
+        });
+
+    let jsContent;
+    await fetch("../JS/darkMode.js")
+        .then(data => data.text())
+        .then(async data => {
+            jsContent = data;
+        });
 
     const name = element.name.replace(/\s*\(.*?\)\s*/g, '');
-    const name_without_spacing = name.replace(/\s/g, '-').replace(/\s*\(.*?\)\s*/g, '').replace(/\,/g, '').replace(/\'/g, '');
-    // console.log(name_without_spacing);
+    const name_id = element.name.replace(/[^a-zA-Z]/g, '').toLowerCase();
     const nativeName = element.nativeName;
     const population = element.population;
     const region = element.region;
@@ -58,6 +91,15 @@ async function country_page(element, data, card) {
                 </style>
             </head>
             <body >
+                <header id="main-header">
+                    <div class="header">
+                        <h2>Where in the world?</h2>
+                        <div class="darkmode">
+                            <i class="fa-solid fa-moon dark"></i>
+                            <span>Dark Mode</span>
+                        </div>
+                    </div>
+                </header>
                 
                 <main>
                     <div class="main-container">
@@ -102,71 +144,65 @@ async function country_page(element, data, card) {
         const blob = new Blob([htmlContent], { type: 'text/html' });
         const url = URL.createObjectURL(blob);
 
-        const a = document.querySelector(`#${name_without_spacing}-card a`);
+        const a = document.querySelector(`#${name_id} a`);
         a.href = url;
         a.target = '_blank';
         a.click();
     });
 }
-const cards_section = document.getElementById('cards-section');
 
-if (cards_section === null) {
-    console.error("cards_section is null");
-}
+
 // search functionality
-let selectedRegion = document.querySelector('.filter-select');
-selectedRegion.value = 'All';
-let searchinput = document.querySelector('.search input');
-let searchbtn = document.querySelector('.search-btn');
-let deleteSearch = document.querySelector('.delete-search');
-async function search(data, countryTosearch) {
+
+async function search(data, countryTosearch) {  // why aysnc??
     for (let i = 0; i < data.length; i++) {
-        if (countryTosearch.length > data[i].name.length) {
-            let coun = data[i].name.replace(/[^a-zA-Z]/g, '').toLowerCase();
-            let hidecard = document.querySelector(`#${coun}`);
-            if (hidecard) {
-                hidecard.style.display = 'none';
+        const name_id = data[i].name.replace(/[^a-zA-Z]/g, '').toLowerCase();
+        const card = document.querySelector(`#${name_id}`);
+
+        if (countryTosearch.length > data[i].name.length) {          
+            if (card) {
+                card.style.display = 'none';
             }
         } else {
-            let coun = data[i].name.replace(/[^a-zA-Z]/g, '').toLowerCase();
-            if (coun.includes(countryTosearch.toLowerCase()) && (data[i].region === selectedRegion.value || selectedRegion.value === 'All')) {
-                let hidecard = document.querySelector(`#${coun}`);
-                if (hidecard) {
-                    hidecard.style.display = 'block';
+            if (name_id.includes(countryTosearch.toLowerCase()) && (data[i].region === selectedRegion.value || selectedRegion.value === 'All')) {
+                if (card) {
+                    card.style.display = 'block';
                 }
             } else {
-                let hidecard = document.querySelector(`#${coun}`);
-                if (hidecard) {
-                    hidecard.style.display = 'none';
+                if (card) {
+                    card.style.display = 'none';
                 }
             }
         }
     }
 }
+
 // filter functionality
 async function filter(data, region) {
     for (let i = 0; i < data.length; i++) {
+        const name_id = data[i].name.replace(/[^a-zA-Z]/g, '').toLowerCase();
+        const card = document.querySelector(`#${name_id}`);
+
         if (data[i].region === region) {
-            let coun = data[i].name.replace(/[^a-zA-Z]/g, '').toLowerCase();
-            let hidecard = document.querySelector(`#${coun}`);
-            if (hidecard) {
-                hidecard.style.display = 'block';
+            if (card) {
+                card.style.display = 'block';
             }
         } else {
-            let coun = data[i].name.replace(/[^a-zA-Z]/g, '').toLowerCase();
-            let hidecard = document.querySelector(`#${coun}`);
-            if (hidecard) {
-                hidecard.style.display = 'none';
+            if (card) {
+                card.style.display = 'none';
             }
         }
     }
 }
+
+
 fetch("../../data.json")
     .then(data => data.json())
     .then(data => {
+        // countries cards
         data.forEach(async (element, idx, arr) => {
             const name = element.name.replace(/\s*\(.*?\)\s*/g, '');
-            const name_without_spacing = name.replace(/\s/g, '-').replace(/\s*\(.*?\)\s*/g, '').replace(/\,/g, '').replace(/\'/g, '');
+            const name_id = element.name.replace(/[^a-zA-Z]/g, '').toLowerCase();
             const region = element.region;
             const population = element.population;
             const capital = element.capital;
@@ -174,9 +210,8 @@ fetch("../../data.json")
 
             const card = document.createElement('li');
             card.classList.add('country-card');
-            // card.setAttribute('id', `${name_without_spacing}-card`);
-            card.setAttribute('name', name_without_spacing);
-            card.setAttribute('id', element.name.replace(/[^a-zA-Z]/g, '').toLowerCase());
+            // card.setAttribute('name', name_without_spacing);
+            card.setAttribute('id', name_id);
             card.innerHTML = `
                 <a></a>
                 <img src=${flag_path}>
@@ -189,49 +224,56 @@ fetch("../../data.json")
             await country_page(element, arr, card);
             cards_section.appendChild(card);
         });
+
         // calling search
-        searchbtn.onclick = async () => {
+        searchbtn.onclick = async () => { // where
             if (searchinput) {
                 await search(data, searchinput.value);
             }
         }
+        
         // or 
         searchinput.addEventListener('input', async (e) => {
             if (e.target.value !== '') {
                 await search(data, searchinput.value);
-            } else {
-                if (selectedRegion.value === 'All') {
-                    returndata();
-                } else {
-                    filter(data, selectedRegion.value);
-                }
-            }
+            }// else {
+            //     if (selectedRegion.value === 'All') {
+            //         returndata();
+            //     } else {
+            //         filter(data, selectedRegion.value);
+            //     }
+            // }
         });
+
         deleteSearch.addEventListener('click', async () => {
             if (searchinput.value) {
-                if(selectedRegion.value === 'All') {
-                    returndata();
-                }
-                else {
-                    filter(data, selectedRegion.value);
-                }
-                searchinput.value = '';
+                // if(selectedRegion.value === 'All') {
+                //     returndata();
+                // }
+                // else {
+                //     filter(data, selectedRegion.value);
+                // }
+                searchinput.value = searchinput.value.slice(0, -1);
+                search(data, searchinput.value);
             }
         })
+
         // calling filter 
         selectedRegion.addEventListener('change', async (e) => {
             if (e.target.value === 'All') {
-                returndata();
+                // returndata();
+                search(data, searchinput.value); // if he was searching for something and click all because he has selected a wrong region
             } else {
                 filter(data, e.target.value);
+                searchinput.value = '';
             }
-            searchinput.value = '';
+            
         })
     });
 
-async function returndata() {
-    let allcountries = document.querySelectorAll('.country-card');
-    allcountries.forEach((country) => {
-        country.style.display = 'block';
-    })
-}
+// async function returndata() {
+//     let allcountries = document.querySelectorAll('.country-card');
+//     allcountries.forEach((country) => {
+//         country.style.display = 'block';
+//     })
+// }

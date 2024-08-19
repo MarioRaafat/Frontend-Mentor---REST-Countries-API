@@ -16,11 +16,13 @@ body {
     background-color: var(--head-color);
     color: var(--text-color);
 }
+
 @media (max-width: 500px) {
     .header {
         padding: 15px 10px;
     }
 }
+
 .header h2 {
     font-weight: bold;
 }
