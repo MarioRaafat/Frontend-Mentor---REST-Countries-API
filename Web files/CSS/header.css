@@ -1,4 +1,5 @@
-* {
+/*
+*{
     box-sizing: border-box;
 }
 
@@ -6,6 +7,17 @@ body {
     font-family: "Cairo", sans-serif;
     background-color: var(--main-color);
 }
+
+*/
+
+/********************                  Important comments                 ************************/
+
+/* the above commented block moded to format.css file */
+
+/* Are search and filter really in header?!!  IDK but it is okay we will discuss that */
+
+
+
 
 /* start header style  */
 .header {
@@ -15,6 +27,7 @@ body {
     align-items: center;
     background-color: var(--head-color);
     color: var(--text-color);
+    margin: -7px 0 0 -7px;
 }
 
 @media (max-width: 500px) {

@@ -1,3 +1,13 @@
+/********************                  Important comments                 ************************/
+/*
+    1. The console has 2 errors IDK why
+    2. Read console logs what is fucking that a7a
+    3. We need to increse accessability to that website the score was 64 lol
+    4. I make some changes so go to github and see what has changed
+*/
+
+
+
 let selectedRegion = document.querySelector('.filter-select');
 selectedRegion.value = 'All';
 let searchinput = document.querySelector('.search input');
@@ -85,6 +95,7 @@ async function country_page(element, data, card) {
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
                 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700&display=swap">
+                <link rel="icon" href="${flag_path}" type="image/x-icon">
                 <title>${name}</title>
                 <style>
                     ${cssContent}
