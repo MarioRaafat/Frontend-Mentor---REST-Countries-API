@@ -71,6 +71,7 @@ async function country_page(element, data, card, card_name = null) {
     const subregion = element.subregion;
     const capital = element.capital;
     const topLevelDomain = card_name ? "None" : element.topLevelDomain.join(", ");
+    
     let currencies = "None";
     if (element.currencies) {
         currencies = element.currencies.map(currency => currency.name).join(", ");
@@ -114,13 +115,16 @@ async function country_page(element, data, card, card_name = null) {
                     ${cssContent}
                 </style>
             </head>
-            <body >
+            <body class="${document.body.classList.contains('dark-mode') ? 'dark-mode' : ''}">
                 <header id="main-header">
                     <div class="header">
                         <h2>Where in the world?</h2>
-                        <div class="darkmode">
-                            <i class="fa-solid fa-moon dark"></i>
-                            <span>Dark Mode</span>
+                        <div class="header-switcher">
+                            Dark Mode
+                            <label class="switch">
+                                <input type="checkbox" id="darkModeToggle">
+                                <span class="slider"></span>
+                            </label>
                         </div>
                     </div>
                 </header>

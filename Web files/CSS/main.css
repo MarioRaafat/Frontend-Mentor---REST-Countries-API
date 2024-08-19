@@ -1,6 +1,6 @@
 .country-card {
     color: var(--text-color);
-    background-color: var(--head-color);
+    background-color: var(--cards-background);
     display: flex;
     flex-direction: column;
     width: 320px;

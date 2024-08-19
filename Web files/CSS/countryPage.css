@@ -4,7 +4,6 @@ body{
     width: 100%;
     z-index: -1;
     overflow-x: hidden;
-    transition: 0.2s !important;
 }
 
 li {
@@ -64,6 +63,7 @@ li {
 }
 
 .borders span{
+    background-color: var(--cards-background);
     padding: 5px 10px;
     margin: 0 5px;
     display: inline-block;
