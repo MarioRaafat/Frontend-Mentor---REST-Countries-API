@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700&display=swap">
+    <title>Discover the World</title>
+    <link rel="icon" href="../Imgs/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="../CSS/darkMode.css">
+    <link rel="stylesheet" href="../CSS/header.css">
+    <link rel="stylesheet" href="../CSS/format.css">
+    <link rel="stylesheet" href="../CSS/countryPage.css">
+</head>
+
+<body>
+    <header id="main-header">
+        <div class="header">
+            <h2>Where in the world?</h2>
+            <div class="header-switcher">
+                Dark Mode
+                <label class="switch">
+                    <input type="checkbox" id="darkModeToggle">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+    </header>
+
+    <div id="card-container"></div>
+
+
+</body>
+
+<script>
+    // Retrieve card HTML from local storage
+    const cardHTML = localStorage.getItem('countryCard');
+    const pageIcon = localStorage.getItem('pageIcon');
+    const pageTitle = localStorage.getItem('pageTitle');
+
+    // Insert card HTML into the DOM
+    document.getElementById('card-container').innerHTML = cardHTML;
+    document.title = pageTitle;
+    document.querySelector('link[rel="icon"]').href = pageIcon;
+    
+    localStorage.removeItem('countryCard');
+    localStorage.removeItem('pageIcon');
+    localStorage.removeItem('pageTitle');
+</script>
+<script src="../JS/darkMode.js"></script>
+
+</html>

@@ -50,12 +50,6 @@ async function country_page(element, data, card, card_name = null) {
             cssContent += data;
         });
 
-    await fetch("../CSS/all.min.css")
-        .then(data => data.text())
-        .then(async data => {
-            cssContent += data;
-        });
-
     let jsContent;
     await fetch("../JS/darkMode.js")
         .then(data => data.text())
@@ -255,7 +249,7 @@ fetch("../../data.json")
                     <p>Region: ${region}</p>
                     <p>Population: ${population}</p>
             `;
-            await country_page(element, arr, card);
+            await country_pagee(element, arr, card);
             cards_section.appendChild(card);
         });
 
@@ -311,3 +305,120 @@ fetch("../../data.json")
 //         country.style.display = 'block';
 //     })
 // }
+
+
+async function country_pagee(element, data, country_card, card_name = null){
+    country_card.addEventListener('click', () => {
+
+    const name = card_name ? card_name : element.name.replace(/\s*\(.*?\)\s*/g, '');
+    const name_id = element.name.replace(/[^a-zA-Z]/g, '').toLowerCase();
+    const nativeName = element.nativeName;
+    const population = element.population;
+    const region = element.region;
+    const subregion = element.subregion;
+    const capital = element.capital;
+    const topLevelDomain = card_name ? "None" : element.topLevelDomain.join(", ");
+    
+    let currencies = "None";
+    if (element.currencies) {
+        currencies = element.currencies.map(currency => currency.name).join(", ");
+    }
+    const languages = element.languages.map(language => language.name).join(", ");
+    let borders = null;
+    if (element.borders) {
+        borders = element.borders.map(ele => data.find(e => e.alpha3Code === ele).name.replace(/\s*\(.*?\)\s*/g, ''));
+    }
+    const flag_path = element.flags.png;
+
+    let borders_list;
+    if (borders !== null) {
+        borders_list = document.createElement('div');
+        borders_list.classList.add('borders');
+        for (border of borders) {
+            const item = document.createElement('span');
+            item.innerText = border;
+            borders_list.appendChild(item);
+        }
+    } else {
+        borders_list = document.createElement('div');
+        borders_list.classList.add('borders');
+        const item = document.createElement('span');
+        item.innerText = "None";
+        borders_list.appendChild(item);
+    }
+        
+
+        // Create the card container
+        const card = document.createElement('div');
+        card.className = 'card';
+
+        // Create the image element
+        const img = document.createElement('img');
+        img.src = flag_path;
+        img.alt = name;
+
+        // Create the card text container
+        const cardText = document.createElement('div');
+        cardText.className = 'card-text';
+
+        // Create the columns container
+        const columns = document.createElement('div');
+        columns.className = 'columns';
+
+        // Create the first column
+        const column1 = document.createElement('div');
+        column1.className = 'column_1';
+        const column1Text = document.createElement('div');
+        column1Text.className = 'column-text';
+        column1Text.innerHTML = `
+            <p>Native Name: ${nativeName}</p>
+            <p>Population: ${population}</p>
+            <p>Region: ${region}</p>
+            <p>Sub Region: ${subregion}</p>
+            <p>Capital: ${capital}</p>
+        `;
+        
+        column1.appendChild(column1Text);
+
+        // Create the second column
+        const column2 = document.createElement('div');
+        column2.className = 'column_2';
+        const column2Text = document.createElement('div');
+        column2Text.className = 'column-text';
+        column2Text.innerHTML = `
+            <p>Top Level Domain: ${topLevelDomain}</p>
+            <p>Currencies: ${currencies}</p>
+            <p>Languages: ${languages}</p>
+        `;
+        
+        column2.appendChild(column2Text);
+
+        columns.appendChild(column1);
+        columns.appendChild(column2);
+
+        // Create the card text footer
+        const cardTextFooter = document.createElement('div');
+        cardTextFooter.className = 'card-text-footer';
+        cardTextFooter.innerHTML = `
+            <div>Border Countries: </div>
+            ${borders_list.outerHTML}
+        `;
+
+        
+        cardText.appendChild(columns);
+        cardText.appendChild(cardTextFooter);
+
+        card.appendChild(img);
+        card.appendChild(cardText);
+
+        localStorage.setItem('countryCard', card.outerHTML);
+        localStorage.setItem('pageIcon', flag_path);
+        localStorage.setItem('pageTitle', name);
+
+        const a = document.querySelector(`#${name_id} a`);
+        a.href = "../HTML/countryPage.html";
+        a.target = '_blank';
+        a.click();
+
+    });
+}
