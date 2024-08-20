@@ -227,6 +227,7 @@ async function filter(data, region) {
 fetch("../../data.json")
     .then(data => data.json())
     .then(data => {
+        //localStorage.setItem("data", data);
         // countries cards
         data.forEach(async (element, idx, arr) => {
             const name = element.name.replace(/\s*\(.*?\)\s*/g, '');
@@ -310,115 +311,101 @@ fetch("../../data.json")
 async function country_pagee(element, data, country_card, card_name = null){
     country_card.addEventListener('click', () => {
 
-    const name = card_name ? card_name : element.name.replace(/\s*\(.*?\)\s*/g, '');
-    const name_id = element.name.replace(/[^a-zA-Z]/g, '').toLowerCase();
-    const nativeName = element.nativeName;
-    const population = element.population;
-    const region = element.region;
-    const subregion = element.subregion;
-    const capital = element.capital;
-    const topLevelDomain = card_name ? "None" : element.topLevelDomain.join(", ");
-    
-    let currencies = "None";
-    if (element.currencies) {
-        currencies = element.currencies.map(currency => currency.name).join(", ");
-    }
-    const languages = element.languages.map(language => language.name).join(", ");
-    let borders = null;
-    if (element.borders) {
-        borders = element.borders.map(ele => data.find(e => e.alpha3Code === ele).name.replace(/\s*\(.*?\)\s*/g, ''));
-    }
-    const flag_path = element.flags.png;
+        // removed from countryPage to allow user to refresh the page without losing the data
+        localStorage.removeItem('countryCard');
+        localStorage.removeItem('pageIcon');
+        localStorage.removeItem('pageTitle');
 
-    let borders_list;
-    if (borders !== null) {
-        borders_list = document.createElement('div');
-        borders_list.classList.add('borders');
-        for (border of borders) {
+        const name = card_name ? card_name : element.name.replace(/\s*\(.*?\)\s*/g, '');
+        const name_id = element.name.replace(/[^a-zA-Z]/g, '').toLowerCase();
+        const nativeName = element.nativeName;
+        const population = element.population;
+        const region = element.region;
+        const subregion = element.subregion;
+        const capital = element.capital;
+        const topLevelDomain = card_name ? "None" : element.topLevelDomain.join(", ");
+        
+        let currencies = "None";
+        if (element.currencies) {
+            currencies = element.currencies.map(currency => currency.name).join(", ");
+        }
+        const languages = element.languages.map(language => language.name).join(", ");
+        let borders = null;
+        if (element.borders) {
+            borders = element.borders.map(ele => data.find(e => e.alpha3Code === ele).name.replace(/\s*\(.*?\)\s*/g, ''));
+        }
+        const flag_path = element.flags.png;
+
+        let borders_list;
+        if (borders !== null) {
+            borders_list = document.createElement('div');
+            borders_list.classList.add('borders');
+            for (border of borders) {
+                const item = document.createElement('span');
+                const a = document.createElement('a');
+                a.setAttribute('id', name_id);
+                item.appendChild(a);
+                item.innerText = border;
+                borders_list.appendChild(item);
+            }
+        } else {
+            borders_list = document.createElement('div');
+            borders_list.classList.add('borders');
             const item = document.createElement('span');
-            item.innerText = border;
+            item.innerText = "None";
             borders_list.appendChild(item);
         }
-    } else {
-        borders_list = document.createElement('div');
-        borders_list.classList.add('borders');
-        const item = document.createElement('span');
-        item.innerText = "None";
-        borders_list.appendChild(item);
-    }
+        
         
 
-        // Create the card container
-        const card = document.createElement('div');
-        card.className = 'card';
+        const cardHTML = `
+            <div class="card">
+                <img src="${flag_path}" alt="${name}">
+                <div class="card-text">
+                    <div class="columns">
+                    <div class="column_1">
+                        <h1>${name}</h1>
+                            <div class="column-text">
+                            <p>Native Name: ${nativeName}</p>
+                            <p>Population: ${population}</p>
+                            <p>Region: ${region}</p>
+                            <p>Sub Region: ${subregion}</p>
+                            <p>Capital: ${capital}</p>
+                        </div>
+                    </div>
+                    <div class="column_2">
+                        <h2>  </h2>
+                        <div class="column-text">
+                            <p>Top Level Domain: ${topLevelDomain}</p>
+                            <p>Currencies: ${currencies}</p>
+                            <p>Languages: ${languages}</p>
+                        </div>
+                    </div>
+                    </div>
 
-        // Create the image element
-        const img = document.createElement('img');
-        img.src = flag_path;
-        img.alt = name;
+                    <div class="card-text-footer">
+                        <div>Border Countries: </div>
+                        ${borders_list.outerHTML}
+                    </div>
+                </div>
+            </div>
+        `
 
-        // Create the card text container
-        const cardText = document.createElement('div');
-        cardText.className = 'card-text';
+        // document.getElementsByTagName('span').forEach((span) => {
+        //     span.addEventListener('click', () => {
+        //         const countryName = span.innerText;
+        //         const country = data.find(e => e.name === countryName);
+        //         country_page(country, data, span, countryName);
+        //     });
+        // });
 
-        // Create the columns container
-        const columns = document.createElement('div');
-        columns.className = 'columns';
+            localStorage.setItem('countryCard', cardHTML);
+            localStorage.setItem('pageIcon', flag_path);
+            localStorage.setItem('pageTitle', name);
 
-        // Create the first column
-        const column1 = document.createElement('div');
-        column1.className = 'column_1';
-        const column1Text = document.createElement('div');
-        column1Text.className = 'column-text';
-        column1Text.innerHTML = `
-            <p>Native Name: ${nativeName}</p>
-            <p>Population: ${population}</p>
-            <p>Region: ${region}</p>
-            <p>Sub Region: ${subregion}</p>
-            <p>Capital: ${capital}</p>
-        `;
-        
-        column1.appendChild(column1Text);
-
-        // Create the second column
-        const column2 = document.createElement('div');
-        column2.className = 'column_2';
-        const column2Text = document.createElement('div');
-        column2Text.className = 'column-text';
-        column2Text.innerHTML = `
-            <p>Top Level Domain: ${topLevelDomain}</p>
-            <p>Currencies: ${currencies}</p>
-            <p>Languages: ${languages}</p>
-        `;
-        
-        column2.appendChild(column2Text);
-
-        columns.appendChild(column1);
-        columns.appendChild(column2);
-
-        // Create the card text footer
-        const cardTextFooter = document.createElement('div');
-        cardTextFooter.className = 'card-text-footer';
-        cardTextFooter.innerHTML = `
-            <div>Border Countries: </div>
-            ${borders_list.outerHTML}
-        `;
-
-        
-        cardText.appendChild(columns);
-        cardText.appendChild(cardTextFooter);
-
-        card.appendChild(img);
-        card.appendChild(cardText);
-
-        localStorage.setItem('countryCard', card.outerHTML);
-        localStorage.setItem('pageIcon', flag_path);
-        localStorage.setItem('pageTitle', name);
-
-        const a = document.querySelector(`#${name_id} a`);
-        a.href = "../HTML/countryPage.html";
-        a.target = '_blank';
-        a.click();
-
-    });
+            const a = document.querySelector(`#${name_id} a`);
+            a.href = "../HTML/countryPage.html";
+            if (card_name === null) a.target = '_blank';
+            a.click();
+        });
 }

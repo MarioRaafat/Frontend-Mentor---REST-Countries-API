@@ -1,3 +1,7 @@
+* {
+    transition: 0.1s; /* solving delay problem */
+}
+
 body{
     font-family: 'Nunito Sans', sans-serif;
     font-size: 16px;
