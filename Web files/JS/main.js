@@ -405,7 +405,7 @@ async function country_pagee(element, data, country_card, card_name = null){
 
             const a = document.querySelector(`#${name_id} a`);
             a.href = "../HTML/countryPage.html";
-            if (card_name === null) a.target = '_blank';
+            if (card_name === null) a.target = '_self';
             a.click();
         });
 }
