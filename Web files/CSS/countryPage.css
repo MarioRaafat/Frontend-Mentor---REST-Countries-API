@@ -17,8 +17,7 @@ li {
 
 .card{
     display: flex;
-    padding: 40px 0px 40px 90px;
-    margin-top: 72px;
+    padding: 40px 0px 40px 40px;
     justify-content: flex-start;
     align-items: center;
 }
@@ -93,4 +92,18 @@ a {
     top: 0;
     left: 0;
     z-index: -1;
+}
+/* back button  */
+.btn-back {
+    margin-top: 50px;
+    padding-left: 50px;
+}
+.back {
+    background-color: var(--head-color);
+    color: var(--text-color);
+    border-radius: 8px;
+    padding: 10px;
+    cursor: pointer;
+    width: 100px;
+    border-color: var(--head-color);
 }

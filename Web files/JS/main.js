@@ -1,25 +1,13 @@
-/********************                  Important comments                 ************************/
-/*
-    1. The console has 2 errors IDK why
-    2. Read console logs what is fucking that a7a
-    3. We need to increse accessability to that website the score was 64 lol
-    4. I make some changes so go to github and see what has changed
-*/
-
 
 
 let selectedRegion = document.querySelector('.filter-select');
 selectedRegion.value = 'All';
 let searchinput = document.querySelector('.search input');
-let searchbtn = document.querySelector('.search-btn');  // where???!!!
 let deleteSearch = document.querySelector('.delete-search');
 const cards_section = document.getElementById('cards-section');
 
 if (cards_section === null) {
     console.error("cards_section is null");
-}
-if (searchbtn === undefined) {
-    console.error("searchbtn is undefined");
 }
 
 
@@ -255,33 +243,12 @@ fetch("../../data.json")
         });
 
         // calling search
-        searchbtn.onclick = async () => { // where
-            if (searchinput) {
-                await search(data, searchinput.value);
-            }
-        }
-        
-        // or 
         searchinput.addEventListener('input', async (e) => {
-            //if (e.target.value !== '') {
                 search(data, searchinput.value);
-            //} else {
-            //     if (selectedRegion.value === 'All') {
-            //         returndata();
-            //     } else {
-            //         filter(data, selectedRegion.value);
-            //     }
-            // }
         });
 
         deleteSearch.addEventListener('click', async () => {
             if (searchinput.value) {
-                // if(selectedRegion.value === 'All') {
-                //     returndata();
-                // }
-                // else {
-                //     filter(data, selectedRegion.value);
-                // }
                 searchinput.value = searchinput.value.slice(0, -1);
                 search(data, searchinput.value);
             }
@@ -300,12 +267,6 @@ fetch("../../data.json")
         })
     });
 
-// async function returndata() {
-//     let allcountries = document.querySelectorAll('.country-card');
-//     allcountries.forEach((country) => {
-//         country.style.display = 'block';
-//     })
-// }
 
 
 async function country_pagee(element, data, country_card, card_name = null){
@@ -405,7 +366,7 @@ async function country_pagee(element, data, country_card, card_name = null){
 
             const a = document.querySelector(`#${name_id} a`);
             a.href = "../HTML/countryPage.html";
-            if (card_name === null) a.target = '_blank';
+            if (card_name === null) a.target = '_self';
             a.click();
         });
 }

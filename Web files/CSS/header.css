@@ -1,22 +1,3 @@
-/*
-*{
-    box-sizing: border-box;
-}
-
-body {
-    font-family: "Cairo", sans-serif;
-    background-color: var(--main-color);
-}
-
-*/
-
-/********************                  Important comments                 ************************/
-
-/* the above commented block moded to format.css file */
-
-/* Are search and filter really in header?!!  IDK but it is okay we will discuss that */
-
-
 
 
 /* start header style  */
@@ -30,12 +11,6 @@ body {
     margin: -7px 0 0 -7px;
 }
 
-@media (max-width: 500px) {
-    .header {
-        padding: 15px 10px;
-    }
-}
-
 .header h2 {
     font-weight: bold;
 }
@@ -46,6 +21,11 @@ body {
 
 .header i {
     cursor: pointer;
+}
+@media (max-width: 768px) {
+    .header {
+        padding: 15px 0px;
+    }
 }
 /* end header style  */
 
