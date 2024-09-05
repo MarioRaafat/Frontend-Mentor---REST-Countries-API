@@ -1,5 +1,3 @@
-
-
 let selectedRegion = document.querySelector('.filter-select');
 selectedRegion.value = 'All';
 let searchinput = document.querySelector('.search input');
@@ -365,7 +363,7 @@ async function country_pagee(element, data, country_card, card_name = null){
             localStorage.setItem('pageTitle', name);
 
             const a = document.querySelector(`#${name_id} a`);
-            a.href = "../HTML/countryPage.html";
+            a.href = "Web%20files/HTML/countryPage.html";
             if (card_name === null) a.target = '_self';
             a.click();
         });
