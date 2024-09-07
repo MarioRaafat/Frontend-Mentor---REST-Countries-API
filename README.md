@@ -70,7 +70,7 @@ Filter by Region: Use the dropdown menu to filter countries by region.
 
 ## Author
 
-- Front-end Developer - [Mario Raafat](www.linkedin.com/in/mario-raafat-0a222a281)
+- Front-end Developer - [Mario Raafat](https://www.linkedin.com/in/mario-raafat-0a222a281)
 - Front-end Developer - [Hussein Mohamed](https://www.linkedin.com/in/hussein-mohamed-b10b89283/)
 
 ## Acknowledgments
